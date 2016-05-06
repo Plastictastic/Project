@@ -26,8 +26,8 @@ int Startpage()
 	char user[12], entered[13];
 	int i, entlen;
 	printw("Welcome to Sandoval Bank of NY!\n");
-	printw("====================\n\n");
-	printw("Please enter your username (or enter 'new' to create a new account): ");
+	printw("===============================\n\n");
+	printw("Please enter your account username to begin (or enter 'new' to create a new account): ");
 	refresh();
 	scanw("%s",entered);
 	entlen = strlen(entered); //length of entered string
@@ -38,9 +38,12 @@ int Startpage()
 	//}
 
 
-	if (entlen>12)
+	if (entlen!=6 && strcmp(entered, "new") != 0)
 	{
-		printw("Invalid username (no greater than 12 characters).\n\n");
+		clear();
+		refresh();
+		printw("Invalid account username.\n\nPress any key to continue...");
+		getch();
 		Startpage();
 	}
 	//if (strcmp(entered,"new")==0)
@@ -53,18 +56,19 @@ int Startpage()
 
 	if (strcmp(entered, "new") == 0)
 	{
-		const char desired[12];
-
+		char desired[6];
 		clear();
 		refresh();
-		printw("Please enter your desired username (no greater than 12 characters): ");
+		printw("Please enter your desired username (no greater than 6 characters): ");
 		refresh();
 		scanw("%s",desired);
 	}
 
 	else
 	{
-		printw("Account does not exist\n\nPress any key to continue...");
+		clear();
+		refresh();
+		printw("Account does not exist.\n\nPress any key to continue...");
 		getch();
 		Startpage();
 	}
