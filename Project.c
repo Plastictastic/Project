@@ -10,6 +10,7 @@
 //Account Creation: create username, randomly generates pin
 //Main Menu: Withdrawl, Deposit, Transaction History, Transfer, Logout
 int Startpage();
+int MainMenu();
 
 void main()
 {
@@ -73,4 +74,46 @@ int Startpage()
 		Startpage();
 	}
 	return 0;
+}
+
+int MainMenu()
+{
+	ch = getch();
+	clear();
+	refresh();
+	printw("Main Menu\n");
+	printw("=========\n\n");
+	printw("1) Withdrawal (F1)\n2) Deposit (F2)\n3)Transaction History (F3)\n4)Transfer (F4)\n5)Logout (F5)");
+
+	if (ch == KEY_F(1))
+	{
+		clear();
+		refresh();
+		printw("How much would you like to withdraw?: $")
+	}
+
+	if (ch == KEY_F(2))
+	{
+		clear();
+		refresh();
+		printw("How much would you like to deposit?: $")
+	}
+
+	if (ch == KEY_F(3))
+	{
+		clear();
+		refresh();
+	}
+
+	if (ch == KEY_F(4))
+	{
+		clear();
+		refresh();
+	}
+
+	if (ch == KEY_F(5))
+	{
+		clear();
+		refresh();
+	}
 }
