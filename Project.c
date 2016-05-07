@@ -78,25 +78,27 @@ int Startpage()
 
 int MainMenu()
 {
+	int ch;
 	ch = getch();
 	clear();
 	refresh();
 	printw("Main Menu\n");
 	printw("=========\n\n");
+	//*printw("Current Balance: $%d\n", balance);
 	printw("1) Withdrawal (F1)\n2) Deposit (F2)\n3)Transaction History (F3)\n4)Transfer (F4)\n5)Logout (F5)");
 
 	if (ch == KEY_F(1))
 	{
 		clear();
 		refresh();
-		printw("How much would you like to withdraw?: $")
+		printw("How much would you like to withdraw?: $");
 	}
 
 	if (ch == KEY_F(2))
 	{
 		clear();
 		refresh();
-		printw("How much would you like to deposit?: $")
+		printw("How much would you like to deposit?: $");
 	}
 
 	if (ch == KEY_F(3))
@@ -115,5 +117,6 @@ int MainMenu()
 	{
 		clear();
 		refresh();
+		Startpage();
 	}
 }
