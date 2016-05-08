@@ -66,15 +66,6 @@ int Startpage()
 	{
 		checklogin(accnum, entered);
 	}
-
-	else
-	{
-		clear();
-		refresh();
-		printw("Account does not exist.\n\nPress any key to continue...");
-		getch();
-		Startpage();
-	}
 	return 0;
 }
 
@@ -128,7 +119,8 @@ void AccountCreation(char *entered)
 	int i,h;
 	char check[7],chpin[4];
 	clear();
-	printw("Account Creation\n\n\n\n");
+	printw("Account Creation\n");
+	printw("================\n\n\n");
 
 	FILE *accinf = fopen("AccInf.csv","r+");
 
@@ -148,8 +140,8 @@ void AccountCreation(char *entered)
 			}
 			
 
-			printw("Account created.\n Your account number is: %.*s",2,check);
-			printw("\n Your PIN number is: %.*s\n\n",4,chpin);
+			printw("Account created.\nYour account number is: %.*s",2,check);
+			printw("\nYour PIN number is: %.*s\n\n",4,chpin);
 			printw("(These numbers are important, so don't forget them!)");
 			break;
 		}
@@ -193,13 +185,15 @@ void checklogin(int accnum, char *entered)
 		if (check[0]==acchar[0] && check[1]==acchar[1])
 		{
 			clear();
-			printw("account exists");
+			printw("Account has been verified.");
 			break;
 		}
 		if (feof(accinf))
 		{
 			clear();
-			printw("acc doesnt exist");
+			printw("Account does not exist.\n\nPress any key to continue...");
+			getch();
+			Startpage();
 		}
 
 		printw("[[%s and %s]]",check[0], acchar[0]);
