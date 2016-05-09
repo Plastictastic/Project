@@ -64,14 +64,7 @@ int Startpage()
 		AccountCreation(entered);
 	}
 
-	if (isalpha(entered))
-	{
-		clear();
-		refresh();
-		printw("Invalid account number.\n\n%s",anykey);
-		getch();
-		Startpage();
-	}
+
 
 	if (entlen==2 && accnum <100)
 	{
