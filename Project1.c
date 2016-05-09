@@ -33,7 +33,7 @@ int Startpage()
 	int i=0, entlen, accnum;
 	printw("Welcome to Sandoval Bank of NY!\n");
 	printw("===============================\n\n");
-	printw("Please enter your account number to begin\n (or enter 'new' to create a new account): ");
+	printw("Please enter your account number to begin\n(or enter 'new' to create a new account): ");
 	refresh();
 	scanw("%s",entered);
 	entlen = strlen(entered); //length of entered string
@@ -88,7 +88,7 @@ int MainMenu()
 	printw("Main Menu\n");
 	printw("=========\n\n");
 	//*printw("Current Balance: $%d\n", balance);
-	printw("1) Withdrawal (F1)\n2) Deposit (F2)\n3)Transaction History (F3)\n4)Transfer (F4)\n5)Logout (F5)");
+	printw("1) Withdrawal (F1)\n2) Deposit (F2)\n3) Transaction History (F3)\n4) Transfer (F4)\n5) Logout (F5)");
 	refresh();
 	ch = getch();
 	if (ch == KEY_F(1))
@@ -134,7 +134,8 @@ void AccountCreation(char *entered)
 	int i,h;
 	char check[7],chpin[4];
 	clear();
-	printw("Account Creation\n\n\n\n");
+	printw("Account Creation\n");
+	printw("================\n\n");
 
 	FILE *accinf = fopen("AccInf.csv","r+");
 
@@ -154,9 +155,9 @@ void AccountCreation(char *entered)
 			}
 			
 
-			printw("Account created.\n Your account number is: %.*s",2,check);
-			printw("\n Your PIN number is: %.*s\n\n",4,chpin);
-			printw("(These numbers are important, so don't forget them!\n\n%s)",anykey);
+			printw("Account created.\nYour account number is: %.*s",2,check);
+			printw("\nYour PIN number is: %.*s\n\n",4,chpin);
+			printw("(These numbers are important, so don't forget them!)\n\n%s)",anykey);
 			break;
 		}
 
@@ -200,7 +201,7 @@ void checklogin(int accnum, char *entered)
 		if (check[4]=='\0')
 		{
 			clear();
-			printw("Account does not exist.\n\n%s",anykey);
+			printw("Invalid PIN.\n\n%s",anykey);
 			break;
 		}
 		if (check[0] == acchar[0] && check[1] == acchar[1] && check[4] != '\0') 
@@ -218,7 +219,8 @@ void checklogin(int accnum, char *entered)
 					{
 						if(check[6] == pin[3])
 						{
-							printw("pin correct");
+							printw("PIN has been validated.\n\n");
+							printw("Press any key to continue...");
 							getch();
 							fclose(accinf);
 							MainMenu();
@@ -228,11 +230,7 @@ void checklogin(int accnum, char *entered)
 
 			}
 			//printw("[[%c%c and %c%c]]",check[0], check[1],acchar[0], acchar[1]);
-			printw("Invalid PIN%n%n%s",anykey);
-			fclose(accinf);
-			getch();
-			Startpage();
-
+			
 		}
 		else
 		{
