@@ -14,6 +14,7 @@ int Startpage();
 int MainMenu();
 void AccountCreation(char*);
 void checklogin(int, char*);
+static char actacc[3], anykey[]="(Press any key to continue...)";
 
 
 void main()
@@ -53,7 +54,7 @@ int Startpage()
 	{
 		clear();
 		refresh();
-		printw("Invalid account number.\n\nPress any key to continue...");
+		printw("Invalid account number.\n\n%s",anykey);
 		getch();
 		Startpage();
 	}
@@ -81,14 +82,15 @@ int Startpage()
 int MainMenu()
 {
 	int ch;
-	ch = getch();
+	keypad(stdscr, TRUE);
+	noecho();
 	clear();
-	refresh();
 	printw("Main Menu\n");
 	printw("=========\n\n");
 	//*printw("Current Balance: $%d\n", balance);
 	printw("1) Withdrawal (F1)\n2) Deposit (F2)\n3)Transaction History (F3)\n4)Transfer (F4)\n5)Logout (F5)");
-
+	refresh();
+	ch = getch();
 	if (ch == KEY_F(1))
 	{
 		clear();
@@ -121,6 +123,10 @@ int MainMenu()
 		refresh();
 		Startpage();
 	}
+	else
+	{
+		MainMenu();
+	}
 }
 
 void AccountCreation(char *entered)
@@ -150,13 +156,13 @@ void AccountCreation(char *entered)
 
 			printw("Account created.\n Your account number is: %.*s",2,check);
 			printw("\n Your PIN number is: %.*s\n\n",4,chpin);
-			printw("(These numbers are important, so don't forget them!)");
+			printw("(These numbers are important, so don't forget them!\n\n%s)",anykey);
 			break;
 		}
 
 		if (feof(accinf)) 
 		{
-			printw("Account limit reached. No new accounts\ncan be created at this time.");
+			printw("Account limit reached. No new accounts\ncan be created at this time.\n\n%s",anykey);
 			refresh();
 			getch();
 			Startpage();
@@ -177,7 +183,7 @@ void checklogin(int accnum, char *entered)
 {
 	FILE *accinf = fopen("AccInf.csv","r+");
 
-	char acchar[3], check[3];
+	char acchar[3], check[10], pin[4];
 	int i = 0;
 
 	for(i=0; i!=2; i++)
@@ -188,21 +194,50 @@ void checklogin(int accnum, char *entered)
 	acchar[2] = ',';
 
 
-	while(fgets(check,3,accinf))
+	while(fgets(check,10,accinf))
 	{
-		if (check[0]==acchar[0] && check[1]==acchar[1])
+		printw("\n%c%c",check[0],check[1]);
+		if (check[4]=='\0')
 		{
 			clear();
-			printw("account exists");
+			printw("Account does not exist.\n\n%s",anykey);
 			break;
 		}
-		if (feof(accinf))
+		if (check[0] == acchar[0] && check[1] == acchar[1] && check[4] != '\0') 
 		{
 			clear();
-			printw("acc doesnt exist");
-		}
+			printw("%c%c%c%c\n\nEnter PIN: ",check[3],check[4],check[5],check[6]);
+			refresh();
+			scanw("%s",pin);
 
-		printw("[[%s and %s]]",check[0], acchar[0]);
+			if (check[3] == pin[0] )
+			{
+				if(check[4] == pin[1])
+				{
+					if(check[5] == pin[2])
+					{
+						if(check[6] == pin[3])
+						{
+							printw("pin correct");
+							getch();
+							fclose(accinf);
+							MainMenu();
+						}
+					}
+				}
+
+			}
+			//printw("[[%c%c and %c%c]]",check[0], check[1],acchar[0], acchar[1]);
+			printw("Invalid PIN%n%n%s",anykey);
+			fclose(accinf);
+			getch();
+			Startpage();
+
+		}
+		else
+		{
+			//do nada
+		}
 	}
 
 	fclose(accinf);
